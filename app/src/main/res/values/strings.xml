@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DaggerVsKotlin</string>
+    <string name="action_settings">Settings</string>
+    <string name="no_results_or_error">No results or error.</string>
+</resources>
