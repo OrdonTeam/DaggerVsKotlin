@@ -10,6 +10,8 @@ class MainActivityTestCase : ActivityInstrumentationTestCase2<MainActivity>(Main
 
     override fun setUp() {
         super.setUp()
+        RetrofitProvider.overrided = lazy { throw RuntimeException("Tests should not use Internet!") }
+        SearchApi.overrided = TestSearchApi
         getActivity()
     }
 
