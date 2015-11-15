@@ -6,23 +6,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.EditText
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.GsonBuilder
-import retrofit.GsonConverterFactory
-import retrofit.Retrofit
-import retrofit.RxJavaCallAdapterFactory
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
 
-    private val searchApi =
-            Retrofit.Builder()
-                    .baseUrl("https://api.github.com")
-                    .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()))
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .build()
-                    .create(SearchApi::class.java)
+    private val searchApi by lazy { SearchApi.get() }
 
     private val resultsView by lazy { findViewById(R.id.results) as RecyclerView }
 
