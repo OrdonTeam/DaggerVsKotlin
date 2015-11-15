@@ -7,12 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.EditText;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.GsonBuilder;
+import com.ordonteam.daggervskotlin.dagger.MainComponent;
 
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
+import javax.inject.Inject;
+
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -21,12 +19,8 @@ import static com.ordonteam.daggervskotlin.Utils.addOnTextChangedListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final SearchApi searchApi = new Retrofit.Builder()
-            .baseUrl("https://api.github.com")
-            .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .build()
-            .create(SearchApi.class);
+    @Inject
+    SearchApi searchApi;
 
     private RecyclerView resultsView;
 
@@ -34,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MainComponent.Injector.inject(this);
         resultsView = (RecyclerView) findViewById(R.id.results);
         resultsView.setLayoutManager(new LinearLayoutManager(this));
         resultsView.setAdapter(new EmptyAdapter());
