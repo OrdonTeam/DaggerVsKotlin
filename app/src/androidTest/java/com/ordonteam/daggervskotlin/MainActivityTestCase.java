@@ -6,6 +6,8 @@ import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.test.ActivityInstrumentationTestCase2;
 
+import com.ordonteam.daggervskotlin.dagger.MainComponent;
+
 public class MainActivityTestCase extends ActivityInstrumentationTestCase2<MainActivity> {
 
     public MainActivityTestCase() {
@@ -15,6 +17,8 @@ public class MainActivityTestCase extends ActivityInstrumentationTestCase2<MainA
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        MainComponent.Injector.restComponent = new TestRestComponent();
+        MainComponent.Injector.searchComponent = new TestSearchComponent();
         getActivity();
     }
 
