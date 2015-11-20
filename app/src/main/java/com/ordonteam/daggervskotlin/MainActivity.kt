@@ -16,13 +16,7 @@ import rx.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
 
-    private val searchApi =
-            Retrofit.Builder()
-                    .baseUrl("https://api.github.com")
-                    .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()))
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .build()
-                    .create(SearchApi::class.java)
+    private val searchApi by lazy { SearchApi.get() }
 
     private val resultsView by lazy { findViewById(R.id.results) as RecyclerView }
 

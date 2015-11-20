@@ -10,6 +10,8 @@ class MainActivityTestCase : ActivityInstrumentationTestCase2<MainActivity>(Main
 
     override fun setUp() {
         super.setUp()
+        RetrofitProvider.testRetrofit = lazy { throw RuntimeException("NO INTERNET") }
+        SearchApi.testSearchApi = TestSearchApi()
         getActivity()
     }
 
