@@ -9,6 +9,9 @@ import android.widget.EditText;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
+import com.ordonteam.daggervskotlin.dagger.MainComponent;
+
+import javax.inject.Inject;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
@@ -21,18 +24,15 @@ import static com.ordonteam.daggervskotlin.Utils.addOnTextChangedListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final SearchApi searchApi = new Retrofit.Builder()
-            .baseUrl("https://api.github.com")
-            .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .build()
-            .create(SearchApi.class);
+    @Inject
+    SearchApi searchApi;
 
     private RecyclerView resultsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainComponent.Inject.inject(this);
         setContentView(R.layout.activity_main);
         resultsView = (RecyclerView) findViewById(R.id.results);
         resultsView.setLayoutManager(new LinearLayoutManager(this));
